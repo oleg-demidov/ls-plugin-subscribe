@@ -1,0 +1,11 @@
+{
+    "name": "subscribe",
+    "version": "1.0.0",
+    "dependencies":{
+        "bs-button":"*"
+    },
+    
+    "scripts": {
+        "subscribe":"js/subscribe.js"
+    }
+}
