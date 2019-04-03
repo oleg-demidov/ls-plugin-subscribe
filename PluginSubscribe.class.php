@@ -15,8 +15,8 @@ if (!class_exists('Plugin')) {
 class PluginSubscribe extends Plugin
 {
     protected $aInherits = [
-        'action' => [
-            'ActionAjax' => '_ActionAjax'
+        'entity' => [
+            //'User_User' => '_Subscribe_User'
         ]
         
     ];

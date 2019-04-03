@@ -2,24 +2,26 @@
 {extends "component@bs-button"}
 
 {block 'button_options'}
-    {component_define_params params=[ 'target_type', 'target_id', 'state', 'count', 'target' ]}
+    {component_define_params params=[ 'event', 'user']}
     
     {$icon = [icon => "thumbs-up", display => 'r', classes => 'mr-1']}
     
-    {if $target}
-        {$count = $target->like->getCount()}
-        {$state = $target->like->getUserLike()}
-        {$target_type = $target->like->getParam('target_type')}
-        {$target_id = $target->getId()}
+    {if $event}
+        {$count = $event->getCountSubscribes()}
+        {$state = $event->isSubscribe($user)}
+        {$event_code = $event->getCode()}
+        
+    {/if}
+    
+    {if $user}
+        {$user_id = $user->getId()}
     {/if}
         
     {$attributes['data-btn-ajax'] = true}
-    {$attributes['data-like'] = true}
-    {$attributes['data-param-target-type'] = $target_type}
-    {$attributes['data-param-target-id'] = $target_id}
-    {$attributes['data-param-state'] = {$state|default:1}}
-    {$attributes['data-loading-text'] = "<i class='fa fa-circle-o-notch fa-spin'></i> {$text}"}
-    
+    {$attributes['data-subscribe'] = true}
+    {$attributes['data-param-event'] = $event_code}
+    {$attributes['data-param-user-id'] = $user_id}
+    {$attributes['data-param-state'] = {$state|default:0}}    
     
     
     {if $state}
