@@ -10,10 +10,11 @@
             // Селекторы
             
             i18n: {
-                
+                unsubscribe: "@plugin.subscribe.subscribe.text.unsubscribe",
+                subscribe: "@plugin.subscribe.subscribe.text.subscribe"
             },
             urls:{
-                load: aRouter.like + 'ajax-like'
+                load: aRouter.subscribe + 'ajax-subscribe'
             }
         },
 
@@ -27,7 +28,7 @@
 
             this._super();
             
-            //this._on(this.element, {click: "onClick"})
+            this._on(this.element, {click: "onClick"})
 
             
         },
@@ -42,6 +43,12 @@
                 this.option('params.state', response.state);
                 this.element.button('toggle');
                 this.element.bsButton('setCount', response.count);
+                if(response.state == 1){
+                    this.element.bsButton('setText', this._i18n('unsubscribe'));
+                }
+                if(response.state == 0){
+                    this.element.bsButton('setText', this._i18n('subscribe'));
+                }
             }.bind(this), {
                 showProgress:false, 
                 onComplete: function(response){

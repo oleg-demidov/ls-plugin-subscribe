@@ -16,9 +16,9 @@ class PluginSubscribe_ModuleSubscribe_EntityEvent extends EntityORM
     
     public function isSubscribe($oUser) {
         if($oSubscribe = $this->getSubcribe($oUser)){
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
     }
     
     public function getSubcribe($oUser) {
@@ -29,5 +29,13 @@ class PluginSubscribe_ModuleSubscribe_EntityEvent extends EntityORM
     }
         
     protected $aValidateRules = [
+        ['code', 'event_exists']
     ];
+    
+    public function ValidateEventExists($sValue) {
+        if($this->PluginSubscribe_Subscribe_GetEventByCode()){
+            return "Event {$sValue} exists";
+        }
+        return true;
+    }
 }

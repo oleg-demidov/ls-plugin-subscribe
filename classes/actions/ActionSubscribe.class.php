@@ -42,35 +42,47 @@ class PluginSubscribe_ActionSubscribe extends ActionPlugin{
         if(!$oUserCurrent = $this->User_GetUserCurrent()){
             $this->MessageAddError('no auth');
         }
+        
+        if(!$oEvent = $this->PluginSubscribe_Subscribe_GetEventByCode( getRequest('event'))){
+            return 'no event';
+        }
 
         if(getRequest('state') == 1 ){
             
-            $mResult = $this->PluginLike_Like_RemoveLike( 
-                $oUserCurrent->getId(), 
-                getRequest('targetType'),
-                getRequest('targetId')
+            $sResult = $this->PluginSubscribe_Subscribe_RemoveEventUser( 
+                $oEvent,
+                getRequest('userId')
             );
-            $this->Message_AddNotice($this->Lang_Get('plugin.like.like.notices.remove'));
+            
+            $this->Message_AddNotice(
+                $this->Lang_Get(
+                    'plugin.subscribe.subscribe.notices.remove', 
+                    ['event_name' => $oEvent->getTitle()]
+                )
+            );
             $this->Viewer_AssignAjax('state', 0);
 
         }else{
         
-            $sResult = $this->PluginLike_Like_Like( 
-                $oUserCurrent->getId(), 
-                getRequest('targetType'),
-                getRequest('targetId')
+            $sResult = $this->PluginSubscribe_Subscribe_SubscribeEventUser( 
+                $oEvent,
+                getRequest('userId'),
+                getRequest('targetTitle')
             );
 
             if(is_string($sResult)){ 
                 $this->Message_AddError($sResult);
             }else{
-                $this->Message_AddNotice($this->Lang_Get('plugin.like.like.notices.add'));
+                $this->Message_AddNotice($this->Lang_Get(
+                        'plugin.subscribe.subscribe.notices.add', 
+                        ['event_name' => $oEvent->getTitle()]
+                    )
+                );
             }
             $this->Viewer_AssignAjax('state', 1);
         
         }
         
-        $this->Viewer_AssignAjax('count', 
-                $this->PluginLike_Like_GetCountForTarget(getRequest('targetType'), getRequest('targetId')));
+        $this->Viewer_AssignAjax('count', $oEvent->getCountSubscribes());
     }
 }
