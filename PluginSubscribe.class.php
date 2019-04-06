@@ -15,10 +15,13 @@ if (!class_exists('Plugin')) {
 class PluginSubscribe extends Plugin
 {
     protected $aInherits = [
+        
+        'template' => [
+            'component.menu.subscribe' => '_components/menu/subscribe.tpl'
+        ],
         'entity' => [
             //'User_User' => '_Subscribe_User'
-        ]
-        
+        ],
     ];
     
     public function Init()

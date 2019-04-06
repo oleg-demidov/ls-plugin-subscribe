@@ -11,5 +11,11 @@ return [
             'add' => 'Вы подписались на "%%event_name%%"',
             'remove' => 'Вы отписались от "%%event_name%%"'
         ]
+    ],
+    'menu_profile' => [
+        'text' => 'Подписки',
+        'blankslate' => [
+            'text' => 'Вы не подписаны на события'
+        ]
     ]
 ];

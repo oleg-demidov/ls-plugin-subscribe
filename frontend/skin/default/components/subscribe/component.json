@@ -4,8 +4,13 @@
     "dependencies":{
         "bs-button":"*"
     },
+    "templates":{ 
+        "subscribe":"subscribe.tpl",
+        "item":"subscribe-item.tpl"
+    },
     
     "scripts": {
         "subscribe":"js/subscribe.js"
+       
     }
 }

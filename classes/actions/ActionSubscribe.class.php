@@ -34,10 +34,13 @@ class PluginSubscribe_ActionSubscribe extends ActionPlugin{
     }
     protected function RegisterEvent() {
         $this->AddEventPreg('/^ajax-subscribe$/i','EventAjaxSubscribe');
+        
+        $this->RegisterEventExternal('Subscribe', 'PluginSubscribe_ActionSubscribe_EventSubscribe');
+        $this->AddEventPreg('/^[\w]+$/i', '/^([\w]+)?$/i', '/^(page([\d]+))?$/i', ['Subscribe::EventList' , 'subscribes']);
     }
     
     public function EventAjaxSubscribe() {
-        $this->Viewer_SetResponseAjax('json');
+        $this->Viewer_SetResponseAjax('json'); 
         
         if(!$oUserCurrent = $this->User_GetUserCurrent()){
             $this->MessageAddError('no auth');
@@ -85,4 +88,6 @@ class PluginSubscribe_ActionSubscribe extends ActionPlugin{
         
         $this->Viewer_AssignAjax('count', $oEvent->getCountSubscribes());
     }
+    
+    
 }

@@ -8,7 +8,7 @@ class PluginSubscribe_ModuleSubscribe_EntityEvent extends EntityORM
     
     public function getCountSubscribes() {
         if(parent::getCountSubscribes() === null){
-            parent::setCountSubscribes($this->PluginSubscribe_Subscribe_GetCountFromSubscribeByFilter([]));
+            parent::setCountSubscribes($this->PluginSubscribe_Subscribe_GetCountFromSubscribeByFilter(['event_id' => $this->getId()]));
         }
         
         return parent::getCountSubscribes();
