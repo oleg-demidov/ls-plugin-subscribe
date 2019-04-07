@@ -2,7 +2,7 @@
 {extends "component@bs-button"}
 
 {block 'button_options'}
-    {component_define_params params=[ 'event', 'user', 'target_title']}
+    {component_define_params params=[ 'event', 'user', 'target_id', 'remove']}
     
     {$icon = [icon => "bell", display => 'r', classes => 'mr-1']}
     
@@ -21,16 +21,16 @@
     {/if}
         
     {$attributes['data-btn-ajax'] = true}
-    {$attributes['data-subscribe'] = true}
+    {$attributes["data-{if $remove}un{/if}subscribe"] = true}
     {$attributes['data-param-event'] = $event_code}
     {$attributes['data-param-state'] = {$state|default:0}}    
-    {$attributes['data-param-target-title'] = $target_title} 
+    {$attributes['data-param-target-id'] = $target_id} 
     
     {if $state}
         {$classes = "active"}
-        {$text = $aLang.plugin.subscribe.subscribe.text.unsubscribe}
+        {$text = $text|default:$aLang.plugin.subscribe.subscribe.text.unsubscribe}
     {else}
-        {$text = $aLang.plugin.subscribe.subscribe.text.subscribe}
+        {$text = $text|default:$aLang.plugin.subscribe.subscribe.text.subscribe}
     {/if}
     
     {if !$count}

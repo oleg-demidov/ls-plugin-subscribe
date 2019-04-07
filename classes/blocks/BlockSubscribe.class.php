@@ -37,8 +37,9 @@ class PluginSubscribe_BlockSubscribe extends Block
             return false;
         }
         
+        $this->Viewer_Assign('remove', $this->GetParam('remove'), true);
         $this->Viewer_Assign('classes', $this->GetParam('classes'), true);
-        $this->Viewer_Assign('target_title', $this->GetParam('target_title'), true);
+        $this->Viewer_Assign('target_id', $this->GetParam('target_id'), true);
         $this->Viewer_Assign('event', $oEvent, true);
         $this->Viewer_Assign('user', $this->User_GetUserCurrent(), true);
         

@@ -15,7 +15,9 @@
             },
             urls:{
                 load: aRouter.subscribe + 'ajax-subscribe'
-            }
+            },
+            onUnsubscribe:null,
+            onSubscribe:null
         },
 
         /**
@@ -44,9 +46,11 @@
                 this.element.button('toggle');
                 this.element.bsButton('setCount', response.count);
                 if(response.state == 1){
+                    this._trigger('onUnsubscribe', null, {response:response, context:this});
                     this.element.bsButton('setText', this._i18n('unsubscribe'));
                 }
                 if(response.state == 0){
+                    this._trigger('onSubscribe', null, {response:response, context:this});
                     this.element.bsButton('setText', this._i18n('subscribe'));
                 }
             }.bind(this), {

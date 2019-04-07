@@ -23,12 +23,12 @@ class PluginSubscribe_ModuleSubscribe extends ModuleORM
         return $oEvent->Save();
     }
     
-    public function SubscribeEventUser(PluginSubscribe_ModuleSubscribe_EntityEvent $oEvent, $iUserId, $sTargetTitle) {
+    public function SubscribeEventUser(PluginSubscribe_ModuleSubscribe_EntityEvent $oEvent, $iUserId, $sTargetId) {
         
         $oSubscribe = Engine::GetEntity('PluginSubscribe_Subscribe_Subscribe', [
             'user_id' => $iUserId,
             'event_id'  => $oEvent->getId(),
-            'target_title' => $sTargetTitle
+            'target_id' => $sTargetId
         ]);
         
         if(!$oSubscribe->_Validate()){
@@ -38,11 +38,12 @@ class PluginSubscribe_ModuleSubscribe extends ModuleORM
         return $oSubscribe->Save();
     }
     
-    public function RemoveEventUser(PluginSubscribe_ModuleSubscribe_EntityEvent $oEvent, $iUserId) {
+    public function RemoveEventUser(PluginSubscribe_ModuleSubscribe_EntityEvent $oEvent, $iUserId, $sTargetId) {
         
         $oSubscribe = $this->PluginSubscribe_Subscribe_GetSubscribeByFilter( [
             'user_id' => $iUserId,
-            'event_id'  => $oEvent->getId()
+            'event_id'  => $oEvent->getId(),
+            'target_id' => $sTargetId
         ]);
         
         if(!$oSubscribe){

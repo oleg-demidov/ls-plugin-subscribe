@@ -54,7 +54,8 @@ class PluginSubscribe_ActionSubscribe extends ActionPlugin{
             
             $sResult = $this->PluginSubscribe_Subscribe_RemoveEventUser( 
                 $oEvent,
-                getRequest('userId')
+                getRequest('userId'),
+                getRequest('targetId')
             );
             
             $this->Message_AddNotice(
@@ -70,7 +71,7 @@ class PluginSubscribe_ActionSubscribe extends ActionPlugin{
             $sResult = $this->PluginSubscribe_Subscribe_SubscribeEventUser( 
                 $oEvent,
                 getRequest('userId'),
-                getRequest('targetTitle')
+                getRequest('targetId')
             );
 
             if(is_string($sResult)){ 
