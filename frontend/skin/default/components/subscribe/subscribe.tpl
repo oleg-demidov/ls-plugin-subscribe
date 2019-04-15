@@ -10,10 +10,13 @@
         
     {if $event}
         {$count = $event->getCountSubscribes()}
-        {$state = $event->isSubscribe($user)}
         {$event_code = $event->getCode()}
-        
     {/if}
+    
+    {if $user}
+        {$state = $event->isSubscribe($user)}
+    {/if}
+
     
     {if $user}
         {$user_id = $user->getId()}
