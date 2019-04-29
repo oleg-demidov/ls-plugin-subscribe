@@ -23,7 +23,6 @@
         {$attributes['data-param-user-id'] = $user->getId()}
     {/if}
         
-    {$attributes['data-btn-ajax'] = true}
     {$attributes["data-{if $remove}un{/if}subscribe"] = true}
     {$attributes['data-param-event'] = $event_code}
     {$attributes['data-param-state'] = {$state|default:0}}    

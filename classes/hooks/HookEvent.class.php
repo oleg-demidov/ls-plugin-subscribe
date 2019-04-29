@@ -19,7 +19,8 @@ class PluginSubscribe_HookEvent extends Hook{
         
         $aSubscribes = $this->PluginSubscribe_Subscribe_GetSubscribeItemsByFilter([
             '#index-from' => 'user_id',
-            'event_id' => $oEvent->getId()
+            'event_id' => $oEvent->getId(),
+            'target_id' => $aParams['target_id']
         ]);
         
         if(!$aSubscribes){

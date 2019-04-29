@@ -30,6 +30,8 @@
 
             this._super();
             
+            this.element.bsButton();
+            
             this._on(this.element, {click: "onClick"})
 
             
