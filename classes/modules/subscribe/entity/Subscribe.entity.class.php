@@ -8,13 +8,27 @@ class PluginSubscribe_ModuleSubscribe_EntitySubscribe extends EntityORM
     );
     
     protected $aValidateRules = [
-        ['user_id event_id', 'subscribe_exists']
+        ['name', 'string', 'on' => ['create']],
+        ['target_id', 'number', 'on' => ['create']],
+        ['event_id', 'event_exists', 'on' => ['create']],
+        ['user_id', 'number', 'on' => ['create']],
+        ['user_id event_id target_id', 'subscribe_exists'],
     ];
+    
+    public function ValidateEventExists($mValue) {
+        if(!$oEvent = $this->PluginSubscribe_Subscribe_GetEventById( $mValue )){
+            return $this->Lang_Get(
+                'plugin.subscribe.event.notices.error_validate_exists'
+            );
+        }
+        return true;
+    }
     
     public function ValidateSubscribeExists($mValue) {
         $oSubscribe = $this->PluginSubscribe_Subscribe_GetSubscribeByFilter( [
             'user_id' => $this->getUserId(),
-            'event_id'  => $this->getEventId()
+            'event_id'  => $this->getEventId(),
+            'target_id' => $this->getTargetId()
         ]);
         
         if($oSubscribe){

@@ -49,45 +49,54 @@ class PluginSubscribe_ActionSubscribe extends ActionPlugin{
         if(!$oEvent = $this->PluginSubscribe_Subscribe_GetEventByCode( getRequest('event'))){
             return 'no event';
         }
+        
+        $oSubscribe = $this->PluginSubscribe_Subscribe_GetSubscribeByFilter([
+            'user_id' => $oUserCurrent->getId(),
+            'event_id' => $oEvent->getId(),
+            'target_id' => getRequest('targetId')
+        ]);
 
-        if(getRequest('state') == 1 ){
+        if($oSubscribe){
             
-            $sResult = $this->PluginSubscribe_Subscribe_RemoveEventUser( 
-                $oEvent,
-                getRequest('userId'),
-                getRequest('targetId')
-            );
+            $oSubscribe->Delete();
             
             $this->Message_AddNotice(
                 $this->Lang_Get(
                     'plugin.subscribe.subscribe.notices.remove', 
-                    ['event_name' => $oEvent->getTitle()]
+                    ['event_name' => $oSubscribe->getName()]
                 )
             );
             $this->Viewer_AssignAjax('state', 0);
 
         }else{
         
-            $sResult = $this->PluginSubscribe_Subscribe_SubscribeEventUser( 
-                $oEvent,
-                getRequest('userId'),
-                getRequest('targetId')
-            );
+            $oSubscribe = Engine::GetEntity('PluginSubscribe_Subscribe_Subscribe');
+            $oSubscribe->_setValidateScenario('create');
+            $oSubscribe->setUserId(getRequest('userId'));
+            $oSubscribe->setTargetId(getRequest('targetId'));
+            $oSubscribe->setName(getRequest('name'));
+            $oSubscribe->setUrl(getRequest('url'));
+            $oSubscribe->setEventId($oEvent->getId());
 
-            if(is_string($sResult)){ 
-                $this->Message_AddError($sResult);
+            if(!$oSubscribe->_Validate()){
+                $this->Message_AddError($oSubscribe->_getValidateError());
+                return;
+            }
+            
+            if(!$oSubscribe->Save()){ 
+                $this->Message_AddError($this->Lang_Get('common.error'));
             }else{
                 $this->Message_AddNotice($this->Lang_Get(
                         'plugin.subscribe.subscribe.notices.add', 
-                        ['event_name' => $oEvent->getTitle()]
+                        ['event_name' => $oSubscribe->getName()]
                     )
                 );
             }
             $this->Viewer_AssignAjax('state', 1);
-        
+
         }
         
-        $this->Viewer_AssignAjax('count', $oEvent->getCountSubscribes());
+        $this->Viewer_AssignAjax('count', $oEvent->getCountSubscribes(getRequest('targetId')));
     }
     
     

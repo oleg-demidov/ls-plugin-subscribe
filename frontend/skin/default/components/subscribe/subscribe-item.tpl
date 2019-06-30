@@ -4,7 +4,7 @@
     
 <div class="{$classes} d-flex justify-content-between">
     <div class="p-1">
-        {$oSubscribe->getTargetTitle()}
+        <a href="{$oSubscribe->getUrl()}">{$oSubscribe->getName()}</a>
     </div>
     {insert name='block' block='subscribe' params=[ 
         remove  => true,

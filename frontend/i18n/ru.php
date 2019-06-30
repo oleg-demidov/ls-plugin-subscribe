@@ -12,6 +12,11 @@ return [
             'remove' => 'Вы отписались от "%%event_name%%"'
         ]
     ],
+    'event' => [
+        'notices' => [
+            'error_validate_exists' => 'Событие не найдено'
+        ]
+    ],
     'menu_profile' => [
         'text' => 'Подписки',
         'blankslate' => [

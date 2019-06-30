@@ -6,9 +6,15 @@ class PluginSubscribe_ModuleSubscribe_EntityEvent extends EntityORM
         'subscribes' => array( self::RELATION_TYPE_HAS_MANY, 'PluginSubscribe_ModuleSubscribe_EntitySubscribe', 'event_id' )
     );
     
-    public function getCountSubscribes() {
+    public function getCountSubscribes($iTargetId = null) {
         if(parent::getCountSubscribes() === null){
-            parent::setCountSubscribes($this->PluginSubscribe_Subscribe_GetCountFromSubscribeByFilter(['event_id' => $this->getId()]));
+            $aFilter = [
+                'event_id' => $this->getId()
+            ];
+            if($iTargetId){
+                $aFilter['target_id'] = $iTargetId;
+            }
+            parent::setCountSubscribes($this->PluginSubscribe_Subscribe_GetCountFromSubscribeByFilter($aFilter));
         }
         
         return parent::getCountSubscribes();

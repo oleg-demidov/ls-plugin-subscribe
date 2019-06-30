@@ -44,7 +44,6 @@
             }
             
             this._load("load", {}, function(response){
-                this.option('params.state', response.state);
                 this.element.button('toggle');
                 this.element.bsButton('setCount', response.count);
                 if(response.state == 1){
