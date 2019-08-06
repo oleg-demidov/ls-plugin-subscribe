@@ -1,9 +1,9 @@
 {
     "name": "subscribe",
     "version": "1.0.0",
-    "dependencies":{
-        "bs-button":"*"
-    },
+    "dependencies":[
+        "bs-button"
+    ],
     "templates":{ 
         "subscribe":"subscribe.tpl",
         "item":"subscribe-item.tpl"
